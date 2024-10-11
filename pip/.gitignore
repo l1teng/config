@@ -1,3 +1,5 @@
 *
 !.gitignore
 !pip.conf
+!cache/
+!cache/.gitkeep
