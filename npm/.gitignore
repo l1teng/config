@@ -1,3 +1,5 @@
 *
 !.gitignore
 !npmrc
+!cache/
+!cache/.gitkeep
