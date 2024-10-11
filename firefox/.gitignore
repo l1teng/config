@@ -1,0 +1,5 @@
+*
+!.gitignore
+!user.js/
+user.js/user.js
+user.js/userjs_backups/
