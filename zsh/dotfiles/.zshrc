@@ -89,7 +89,12 @@ proxy() {
     export HTTP_PROXY=$http_proxy HTTPS_PROXY=$http_proxy
   fi
 }
-proxy
+proxy-enable() {
+  http_proxy=http://127.0.0.1:1079
+  export http_proxy=$http_proxy https_proxy=$http_proxy
+  export HTTP_PROXY=$http_proxy HTTPS_PROXY=$http_proxy
+}
+proxy-enable
 
 # =============================================================================
 # Shortcuts
