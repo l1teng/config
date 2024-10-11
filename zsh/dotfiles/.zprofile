@@ -34,7 +34,8 @@ export TLDR_AUTO_UPDATE_DISABLED=1
 
 export CONDARC="${HOME}/.config/conda/condarc"
 
-export GOCACHE="${HOME}/.local/go/cache"
+export GOCACHE="${HOME}/.config/go/cache"
+export GOPATH="${HOME}/.config/go/tmp"
 
 export NPM_CONFIG_USERCONFIG="${HOME}/.config/npm/npmrc"
 
