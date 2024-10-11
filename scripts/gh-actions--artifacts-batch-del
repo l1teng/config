@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+token=$GH_TOKEN
+user=$1
+repo=$2
+[[ -n $token ]] && [[ -n $user ]] && [[ -n $repo ]] && \
+  artifacts_ids=$( \
+    curl -s -L -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
+      -H "Authorization: Bearer ${token}" https://api.github.com/repos/${user}/${repo}/actions/artifacts | \
+	  jq .artifacts | jq .[] | jq .id) && \
+  artifacts_ids=$(echo $artifacts_ids | awk '{len=split($0,a,",");for(i=1;i<=len;i++) print a[i]}') && \
+  for artifacts_id in ${artifacts_ids[@]}; do \
+	echo "cleaning artifact, id: ${artifacts_id}"; \
+    curl -s -L -X DELETE -H "Accept: application/vnd.github+json" -H "X-GitHub-Api-Version: 2022-11-28" \
+      -H "Authorization: Bearer ${token}" https://api.github.com/repos/${user}/${repo}/actions/artifacts/$artifacts_id; done
