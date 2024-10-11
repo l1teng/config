@@ -219,15 +219,20 @@ conf.nvim__engines = {
 	{ type = "lsp", mason_id = "clangd", lspconfig_id = "clangd" },
 	{ type = "lsp", mason_id = "lua-language-server", lspconfig_id = "lua_ls" },
 	{ type = "lsp", mason_id = "bash-language-server", lspconfig_id = "bashls" },
+	{ type = "lsp", mason_id = "gopls", lspconfig_id = "gopls" },
+	{ type = "lsp", mason_id = "texlab", lspconfig_id = "texlab" },
 	{ type = "formatter", mason_id = "codespell" },
 	{ type = "formatter", mason_id = "isort" },
 	{ type = "formatter", mason_id = "black" },
 	{ type = "formatter", mason_id = "stylua" },
 	{ type = "formatter", mason_id = "prettier" },
+	{ type = "formatter", mason_id = "gofumpt" },
+	{ type = "formatter", mason_id = "latexindent" },
+	{ type = "formatter", mason_id = "bibtex-tidy" },
 	-- { type = "lint", mason_id = "pylint" }, -- wrongly hint not import error
 	{ type = "lint", mason_id = "ruff" },
 	{ type = "lint", mason_id = "luacheck" },
-	-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
+	-- https://github.com/neovim/nvim-lspconfig/blob/master/doc/configs.md
 	-- https://mason-registry.dev/registry/list#yaml-language-server
 }
 conf.lspconfig__engines = {}

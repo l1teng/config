@@ -102,3 +102,7 @@ vim.o.showtabline = 2
 
 -- clipboard enhance
 vim.opt.clipboard = "unnamedplus"
+
+--
+vim.cmd("filetype plugin indent on")
+vim.cmd("syntax enable")

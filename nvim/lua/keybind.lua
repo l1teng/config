@@ -15,8 +15,8 @@ kb.basic = function()
 	end, opt("[basic] No Highlight"))
 	map("v", "<", "<gv", opt("[basic] Indent >"))
 	map("v", ">", ">gv", opt("[basic] Indent <"))
-    -- fold
-    -- vim.cmd([[set foldmethod=indent]])
+	-- fold
+	-- vim.cmd([[set foldmethod=indent]])
 end
 
 kb.window = function()
@@ -168,6 +168,12 @@ kb.lspsaga = function()
 	map("n", "K", function()
 		vim.cmd("Lspsaga hover_doc")
 	end, opt("[lspsaga] Hover Doc"))
+end
+
+kb.vimtex = function()
+	-- map("n", "<leader>lS", "<Plug>(vimtex-env-delete)", opt("[VimTex] Del Env Tag"))
+	-- map("n", "<leader>lA", "<Plug>(vimtex-env-change)", opt("[VimTex] ALt Env Tag"))
+	-- map("n", "", "<Plug>（vimtex-cmd-delete）", opt("[VimTex] Del Surround Tag"))
 end
 
 return kb
