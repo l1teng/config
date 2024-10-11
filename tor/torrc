@@ -1,0 +1,10 @@
+SocksPort 0.0.0.0:1081
+
+UseBridges 0
+Socks5Proxy 127.0.0.1:1080
+
+# DataDirectory /opt/homebrew/share/tor
+# GeoIPFile /opt/homebrew/share/tor/geoip
+# GeoIPv6File /opt/homebrew/share/tor/geoip6
+ExcludeNodes {cn},{hk},{mo},{kp},{ir},{sy},{pk},{cu},{vn}
+StrictNodes 1
