@@ -3,3 +3,5 @@
 !.gitkeep
 !cache/
 !cache/.gitkeep
+!tmp/
+!tmp/.gitkeep
