@@ -1,0 +1,37 @@
+[user]
+  name                = Terry Li
+  email               = i@terrytengli.com
+  signingkey          = 82461C764B2E528FA495686E4AD34F9B09210E25
+[commit]
+  gpgsign             = true
+[gpg]
+  program = gpg
+[init]
+  defaultBranch       = main
+[core]
+  editor              = "/usr/bin/env vim"
+  excludesfile        = ~/.config/git/ignore
+[safe]
+  directory           = *
+[alias]
+  cm                  = commit -s
+  cm-nos              = cm --no-gpg-sign
+  clone               = clone --recursive -j8
+  lg                  = log --oneline --graph
+  lgs                 = lg --show-signature
+  lga                 = lg --all
+  lgas                = lga --show-signature
+  s                   = status
+  st                  = status
+  pl                  = pull --rebase=true
+  smu                 = submodule update --init --recursive
+  rmdel               = push --delete
+[filter "lfs"]
+  clean               = git-lfs clean -- %f
+  smudge              = git-lfs smudge -- %f
+  process             = git-lfs filter-process
+  required            = true
+[lfs]
+  allowincompletepush = true
+[credential]
+  helper              = store --file ~/.config/git/credentials
