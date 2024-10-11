@@ -1,0 +1,10 @@
+*.legacy
+*.legacy/
+
+vim/
+htop/
+
+iterm2/
+sway/
+
+# TODO: RIME
