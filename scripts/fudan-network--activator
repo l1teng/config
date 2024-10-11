@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+[[ -n $FUDAN_UID ]] && username=$FUDAN_UID
+[[ -n $FUDAN_PSWD ]] && password=$FUDAN_PSWD
+[[ -n $1 ]] && username=$1
+[[ -n $2 ]] && password=$2
+
+URL="https://wlrz.fudan.edu.cn/include/auth_action.php"
+
+[[ ${#username} = 11 && -n $username && -n $password ]] && \
+  curl $URL --insecure \
+    --data "action=login&username=$username&password=$password&ac_id=1&user_ip=&nas_ip=&user_mac=&save_me=1&ajax=1"

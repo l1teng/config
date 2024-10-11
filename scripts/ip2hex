@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+p1=$(printf '%02x' $(echo $1 | awk -F '.' '{print $1}'))
+p2=$(printf '%02x' $(echo $1 | awk -F '.' '{print $2}'))
+p3=$(printf '%02x' $(echo $1 | awk -F '.' '{print $3}'))
+p4=$(printf '%02x' $(echo $1 | awk -F '.' '{print $4}'))
+echo $p1$p2$p3$p4
+

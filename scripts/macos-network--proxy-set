@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+httpd_param=("wi-fi" "127.0.0.1" "1079")
+socks_param=("wi-fi" "127.0.0.1" "1080")
+[[ -n $http_proxy_addr ]] && [[ -n $http_proxy_port ]] && \
+  httpd_param=("wi-fi" "$http_proxy_addr" "$http_proxy_port")
+[[ -n $socks_proxy_addr ]] && [[ -n $socks_proxy_port ]] && \
+  socks_param=("wi-fi" "$socks_proxy_addr" "$socks_proxy_port")
+
+networksetup -setwebproxy ${httpd_param:0}
+networksetup -setsecurewebproxy ${httpd_param:0}
+networksetup -setsocksfirewallproxy ${socks_param:0}

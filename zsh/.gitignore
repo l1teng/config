@@ -1,0 +1,11 @@
+*
+!.gitignore
+!.gitkeep
+!third_party/
+!third_party/**
+!custom/
+!custom/**
+!zshenv
+!dotfiles/
+!dotfiles/.zprofile
+!dotfiles/.zshrc

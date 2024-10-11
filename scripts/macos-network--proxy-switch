@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+if [[ $(networksetup -getwebproxy wi-fi) == *"Enabled: Yes"* ]]; then
+  echo "Enable -> Disable"
+  param=("wi-fi" "off")
+else
+  param=("wi-fi" "on")
+  echo "Disable -> Enable"
+fi
+
+networksetup -setwebproxystate ${param[@]}
+networksetup -setsecurewebproxystate ${param[@]}
+networksetup -setsocksfirewallproxystate ${param[@]}

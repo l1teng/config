@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+/usr/bin/uuidgen | awk '{print tolower($0)}'
+

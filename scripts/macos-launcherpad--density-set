@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+defaults write com.apple.dock springboard-columns -int 12
+defaults write com.apple.dock springboard-rows -int 8
+killall Dock

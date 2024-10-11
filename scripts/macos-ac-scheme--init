@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# https://sspai.com/post/61379
+echo " \
+  pmset restoredefaults && \
+  \
+  pmset -a womp 1 && \
+  pmset -a powernap 1 && \
+  pmset -a proximitywake 1 && \
+  pmset -a autorestart 1 && \
+  pmset -a lidwake 1 && \
+  pmset -a acwake 1 && \
+  pmset -a halfdim 1 && \
+  pmset -a ttyskeepawake 1 && \
+  pmset -a networkoversleep 1 && \
+  pmset -a hibernatemode 3 && \
+  \
+  pmset -b lessbright 0 && \
+  pmset -b standby 1 && \
+  pmset -b sleep 5 && \
+  pmset -b disksleep 5 && \
+  pmset -b displaysleep 3 && \
+  \
+  pmset -c standby 0 && \
+  pmset -c sleep 0 && \
+  pmset -c disksleep 0 && \
+  pmset -c displaysleep 0 && \
+  \
+  pmset -g custom \
+  " | sudo sh

@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+open -n /Applications/WeChat.app/Contents/MacOS/WeChat
