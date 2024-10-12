@@ -41,6 +41,8 @@ export NPM_CONFIG_USERCONFIG="${HOME}/.config/npm/npmrc"
 
 export GNUPGHOME=${HOME}/.config/gnupg
 
+export CURL_HOME=${HOME}/.config/curl
+
 # =============================================================================
 # =============================================================================
 
