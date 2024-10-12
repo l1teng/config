@@ -13,4 +13,5 @@ clean-npm-cache:
 clean-pip-cache:
 	@rm -rf pip/cache/*
 clean-xray-cache:
-	@rm -rf xray/cache/*
+	@echo "" > xray/cache/acc
+	@echo "" > xray/cache/err
