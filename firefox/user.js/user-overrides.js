@@ -72,7 +72,7 @@ user_pref("privacy.resistFingerprinting.pbmode", true);
 //* 4505
 // user_pref("privacy.resistFingerprinting.exemptedDomains", "*.example.invalid");
 //* 4520
-// user_pref("webgl.disabled", true);
+user_pref("webgl.disabled", true);
 //* 5001
 // user_pref("browser.privatebrowsing.autostart", true);
 //* 5002
@@ -89,11 +89,11 @@ user_pref("browser.sessionstore.resume_from_crash", false);
 //* 5009
 user_pref("browser.download.forbid_open_with", true);
 //* 5010 - 5011
-user_pref("browser.urlbar.suggest.history", false);
+user_pref("browser.urlbar.suggest.history", true);
 user_pref("browser.urlbar.suggest.bookmark", false);
-user_pref("browser.urlbar.suggest.openpage", false);
+user_pref("browser.urlbar.suggest.openpage", true);
 user_pref("browser.urlbar.suggest.topsites", false);
-user_pref("browser.urlbar.maxRichResults", 0);
+// user_pref("browser.urlbar.maxRichResults", 0);
 user_pref("browser.urlbar.autoFill", false);
 //* 5014
 user_pref("browser.taskbar.lists.enabled", false);
@@ -118,7 +118,7 @@ user_pref("keyword.enabled", true);
 //user_pref("gfx.font_rendering.opentype_svg.enabled", false);
 //user_pref("media.eme.enabled", false);
 //user_pref("browser.eme.ui.enabled", false);
-// user_pref("network.dns.disableIPv6", true);
+user_pref("network.dns.disableIPv6", true);
 // user_pref("network.http.referer.XOriginPolicy", 2);
 //* 7002
 user_pref("permissions.default.geo", 2);

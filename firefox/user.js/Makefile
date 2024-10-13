@@ -3,7 +3,7 @@ _: update_config_macos
 PROFILE_DIR ?= $(HOME)/Archives/AppData/Firefox/default-profile
 
 kill_macos:
-	@pkill firefox
+	-@pgrep firefox >/dev/null && pkill firefox
 
 update_userjs_macos:
 	./updater.sh -se
