@@ -223,7 +223,8 @@ require("lazy").setup({
 		{ "aserowy/tmux.nvim", commit = "65ee9d6" },
 		{
 			"nvim-telescope/telescope.nvim",
-			tag = "0.1.8",
+			-- tag = "0.1.8",
+			commit = "df534c3",
 			dependencies = { { "nvim-lua/plenary.nvim", tag = "v0.1.4" } },
 			config = function()
 				require("telescope").setup()

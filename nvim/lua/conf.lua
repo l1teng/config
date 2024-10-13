@@ -335,7 +335,7 @@ conf.lsp_signature = {
 conf.lspsaga = {}
 
 conf.nvim_treesitter = {
-	ensure_installed = { "python", "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline" },
+	ensure_installed = { "python", "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "latex" },
 }
 
 return conf
