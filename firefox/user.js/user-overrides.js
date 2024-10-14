@@ -93,7 +93,7 @@ user_pref("browser.urlbar.suggest.history", true);
 user_pref("browser.urlbar.suggest.bookmark", false);
 user_pref("browser.urlbar.suggest.openpage", true);
 user_pref("browser.urlbar.suggest.topsites", false);
-// user_pref("browser.urlbar.maxRichResults", 0);
+// user_pref("browser.urlbar.maxRichResults", 10);
 user_pref("browser.urlbar.autoFill", false);
 //* 5014
 user_pref("browser.taskbar.lists.enabled", false);
@@ -116,8 +116,8 @@ user_pref("keyword.enabled", true);
 //user_pref("javascript.options.jit_trustedprincipals", true);
 //user_pref("javascript.options.wasm", false);
 //user_pref("gfx.font_rendering.opentype_svg.enabled", false);
-//user_pref("media.eme.enabled", false);
-//user_pref("browser.eme.ui.enabled", false);
+user_pref("media.eme.enabled", false);
+user_pref("browser.eme.ui.enabled", false);
 user_pref("network.dns.disableIPv6", true);
 // user_pref("network.http.referer.XOriginPolicy", 2);
 //* 7002
