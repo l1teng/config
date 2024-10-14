@@ -1,7 +1,7 @@
 [user]
   name                = Terry Li
   email               = i@terrytengli.com
-  signingkey          = 82461C764B2E528FA495686E4AD34F9B09210E25
+  signingkey          = 0xD719B250718A5D55
 [commit]
   gpgsign             = true
 [gpg]
