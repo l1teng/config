@@ -101,7 +101,7 @@ proxy-enable
 # =============================================================================
 alias ll="ls -al"
 alias l="ll"
-alias vim="VIMINIT='source ~/.config/vim/vimrc' vim"
+# alias vim="VIMINIT='source ~/.config/vim/vimrc' vim"
 alias tmux="tmux -2"
 alias wget="wget --hsts-file /tmp/liteng-wget-hsts"
 alias aria2c="aria2c -s16 -x16 -k1M"
