@@ -338,4 +338,15 @@ conf.nvim_treesitter = {
 	ensure_installed = { "python", "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "latex" },
 }
 
+conf.vimtex = function()
+	if vim.loop.os_uname().sysname == "Darwin" then
+		vim.g.vimtex_view_method = "skim"
+	elseif vim.loop.os_uname().sysname == "Linux" then
+		vim.g.vimtex_view_method = ""
+	else
+        error("Not Implemented Error.")
+	end
+	vim.g.vimtex_quickfix_open_on_warning = 0
+end
+
 return conf
