@@ -46,4 +46,4 @@ export CURL_HOME=${HOME}/.config/curl
 # =============================================================================
 # =============================================================================
 
-eval $(/opt/homebrew/bin/brew shellenv)
+[[ $(uname -s) == "Darwin" ]] && eval $(/opt/homebrew/bin/brew shellenv)
