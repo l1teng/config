@@ -23,6 +23,8 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 -- basic
 require("basic")
+local os_spec = jit.os:lower()
+-- TODO: zc, quickfix
 
 -- ================================================================================
 -- plugs
@@ -30,27 +32,11 @@ require("basic")
 local conf = require("conf")
 conf.auto_restore_cursor_pos()
 local keyb = require("keybind")
-for _, k in ipairs({ "basic", "window", "tab", "lsp" }) do
+for _, k in ipairs({ "basic", "window", "tab" }) do
 	keyb[k]()
 end
 require("lazy").setup({
 	spec = {
-		{
-			"williamboman/mason.nvim",
-			tag = "v1.10.0",
-			dependencies = {
-				{
-					"WhoIsSethDaniel/mason-tool-installer.nvim",
-					commit = "c5e07b8",
-					config = function()
-						require("mason-tool-installer").setup(conf.mason_tool_installer)
-					end,
-				},
-			},
-			config = function()
-				require("mason").setup(conf.mason)
-			end,
-		},
 		{
 			"marko-cerovac/material.nvim",
 			commit = "ac8f02e",
@@ -65,15 +51,15 @@ require("lazy").setup({
 				{
 					"nvim-tree/nvim-tree.lua",
 					commit = "cb57691",
-					-- dependencies = { { "nvim-tree/nvim-web-devicons", tag = "v0.100" } },
+					lazy = true,
 					init = function()
 						vim.g.loaded_netrw = 1
 						vim.g.loaded_netrwPlugin = 1
+						vim.o.termguicolors = true
+						vim.opt.termguicolors = true
 					end,
-					config = function()
-						require("nvim-tree").setup(conf.nvt(keyb.nvt_buf))
-						keyb.nvt()
-					end,
+					opts = conf.nvt(keyb.nvt_buf),
+					keys = keyb.nvt,
 				},
 				{
 					"lukas-reineke/indent-blankline.nvim",
@@ -90,70 +76,61 @@ require("lazy").setup({
 						{
 							"famiu/bufdelete.nvim",
 							commit = "f6bcea7",
-							config = function()
-								keyb.bufdelete()
-							end,
+							keys = keyb.bufdelete,
 						},
 					},
 					init = function()
 						vim.o.termguicolors = true
 						vim.opt.termguicolors = true
 					end,
-					config = function()
-						conf.bufferline()
-						keyb.bufferline()
-					end,
+					opts = conf.bufferline,
+					keys = keyb.bufferline,
 				},
 				{
 					"nvim-lualine/lualine.nvim",
 					commit = "b431d22",
-					config = function()
-						require("lualine").setup(conf.lualine)
-					end,
+					opts = conf.lualine,
 				},
 				{
 					"lewis6991/gitsigns.nvim",
 					commit = "1ef74b5",
-					config = function()
-						require("gitsigns").setup()
-					end,
+					opts = {},
+					keys = keyb.gitsigns,
 				},
 				{
 					"j-hui/fidget.nvim",
 					tag = "v1.4.5",
-					config = function()
-						require("fidget").setup()
-					end,
+					opts = {},
 				},
 				{
 					"folke/which-key.nvim",
 					tag = "v3.13.2",
-					config = function()
-						require("which-key").setup()
-					end,
+					lazy = true,
+					opts = {},
 				},
 				{
 					"phaazon/hop.nvim",
 					tag = "v2.0.3",
-					config = function()
-						require("hop").setup(conf.hop)
-						keyb.hop()
-					end,
+					lazy = true,
+					opts = { keys = "etovxqpdygfblzhckisuran" },
+					keys = keyb.hop,
 				},
 				{
 					"hrsh7th/nvim-cmp",
 					commit = "ae644fe",
 					dependencies = {
-						{ "onsails/lspkind.nvim", commit = "cff4ae3" },
-						{ "hrsh7th/cmp-buffer", commit = "3022dbc" },
-						{ "hrsh7th/cmp-path", commit = "91ff86c" },
+						{ "onsails/lspkind.nvim", commit = "cff4ae3", lazy = true },
+						{ "hrsh7th/cmp-buffer", commit = "3022dbc", lazy = true },
+						{ "hrsh7th/cmp-path", commit = "91ff86c", lazy = true },
 						{
 							"hrsh7th/cmp-vsnip",
 							commit = "989a8a7",
+							lazy = true,
 							dependencies = {
 								{
 									"hrsh7th/vim-vsnip",
 									commit = "02a8e79",
+									lazy = true,
 									dependencies = {
 										{ "rafamadriz/friendly-snippets", branch = "main" },
 									},
@@ -163,11 +140,12 @@ require("lazy").setup({
 						{
 							"hrsh7th/cmp-nvim-lsp",
 							commit = "39e2eda",
+							lazy = true,
 							dependencies = {
 								{
 									"neovim/nvim-lspconfig",
 									tag = "v0.1.8",
-									config = function() end,
+									lazy = true,
 								},
 							},
 							config = function()
@@ -177,105 +155,101 @@ require("lazy").setup({
 						{
 							"zbirenbaum/copilot-cmp",
 							commit = "b6e5286",
+							lazy = true,
 							dependencies = {
 								{
 									"zbirenbaum/copilot.lua",
 									commit = "86537b2",
-									config = function()
-										require("copilot").setup(conf.copilot)
-									end,
+									lazy = true,
+									opts = conf.copilot,
 								},
 							},
-							config = function()
-								require("copilot_cmp").setup()
-							end,
+							opts = {},
 						},
 					},
 					config = function()
-						-- require("cmp").setup(conf.cmp(keyb.cmp()))
 						conf.cmp(keyb.cmp())
 					end,
 				},
 			},
 			init = function()
-				vim.g.material_style = "darker"
-			end,
-			config = function()
-				require("material").setup(conf.material)
+				vim.g.material_style = "deep ocean"
 				vim.cmd([[colorscheme material]])
-				keyb.material()
 			end,
+			opts = conf.material,
 		},
 		{
 			"numToStr/Comment.nvim",
 			tag = "v0.8.0",
-			config = function()
-				require("Comment").setup(conf.comment)
-			end,
+			lazy = true,
+			opts = { mappings = { extra = false } },
 		},
 		{
 			"windwp/nvim-autopairs",
 			commit = "fd2badc",
-			config = function()
-				require("nvim-autopairs").setup()
-			end,
+			opts = {},
 		},
 		{ "aserowy/tmux.nvim", commit = "65ee9d6" },
 		{
 			"nvim-telescope/telescope.nvim",
-			-- tag = "0.1.8",
 			commit = "df534c3",
+			lazy = true,
 			dependencies = { { "nvim-lua/plenary.nvim", tag = "v0.1.4" } },
-			config = function()
-				require("telescope").setup()
-				keyb.telescope()
-			end,
+			opts = conf.telescope,
+			keys = keyb.telescope,
 		},
 		{
 			"stevearc/conform.nvim",
 			branch = "nvim-0.9",
-			config = function()
-				local conform = require("conform")
-				-- conform.setup(conf.conform)
-				conf.conform(conform)
-				keyb.conform(conform)
-			end,
+			lazy = true,
+			opts = conf.conform,
+			keys = keyb.conform,
 		},
 		{ "mfussenegger/nvim-lint", branch = "master", config = conf.nvim_lint },
 		{
 			"ray-x/lsp_signature.nvim",
 			tag = "v0.3.1",
-			config = function()
-				require("lsp_signature").setup()
-			end,
+			opts = {},
 		},
 		{
 			"nvimdev/lspsaga.nvim",
 			commit = "4ce44df",
+			lazy = true,
 			dependencies = {
 				{
 					"nvim-treesitter/nvim-treesitter",
 					tag = "v0.9.2",
-					config = function()
-						require("nvim-treesitter.configs").setup(conf.nvim_treesitter)
-					end,
+					lazy = true,
+					main = "nvim-treesitter.configs",
+					opts = conf.nvim_treesitter,
 				},
-				{ "nvim-tree/nvim-web-devicons", tag = "v0.100" },
+				{ "nvim-tree/nvim-web-devicons", tag = "v0.100", lazy = true },
 			},
-			config = function()
-				require("lspsaga").setup(conf.lspsaga)
-				keyb.lspsaga()
-			end,
+			opts = {},
+			keys = keyb.lspsaga,
 		},
 		{
 			"lervag/vimtex",
 			tag = "v2.15",
+			ft = { "tex", "plaintex", "bib" },
 			init = function()
-				conf.vimtex()
+				vim.g.vimtex_view_method = (os_spec == "osx") and "skim" or ""
+				vim.g.vimtex_quickfix_open_on_warning = 0
 			end,
-			config = function()
-				keyb.vimtex()
-			end,
+		},
+		{
+			"williamboman/mason.nvim",
+			tag = "v1.10.0",
+			dependencies = {
+				{
+					"WhoIsSethDaniel/mason-tool-installer.nvim",
+					commit = "c5e07b8",
+					config = function()
+						require("mason-tool-installer").setup(conf.mason_tool_installer)
+					end,
+				},
+			},
+			opts = {},
 		},
 	},
 	checker = { enabled = true },

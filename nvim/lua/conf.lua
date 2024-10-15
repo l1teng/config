@@ -12,33 +12,23 @@ end
 
 conf.nvt = function(kb)
 	return {
+		on_attach = kb,
+		hijack_cursor = true,
 		auto_reload_on_write = true,
 		create_in_closed_folder = false,
 		disable_netrw = true,
-		on_attach = kb,
+		hijack_unnamed_buffer_when_opening = false,
 		view = {
+			relativenumber = true,
 			adaptive_size = true,
 			float = {
 				enable = true,
 			},
-			-- number = false,
-			-- relativenumber = false,
-			-- signcolumn = "yes",
-		},
-		git = {
-			timeout = 5000,
-		},
-		update_cwd = true,
-		update_focused_file = {
-			enable = true,
-			update_cwd = true,
-		},
-		filters = {
-			dotfiles = true,
-			custom = { "node_modules", "__pycache__" },
-			exclude = { ".gitignore", ".vscode" },
 		},
 		renderer = {
+			indent_markers = {
+				enable = true,
+			},
 			icons = {
 				web_devicons = {
 					file = {
@@ -77,9 +67,14 @@ conf.nvt = function(kb)
 					},
 				},
 			},
-			indent_markers = {
-				enable = true,
-			},
+		},
+		git = {
+			timeout = 5000,
+		},
+		filters = {
+			dotfiles = true,
+			custom = { "node_modules", "__pycache__" },
+			exclude = { ".gitignore", ".gitkeep", ".vscode" },
 		},
 	}
 end
@@ -92,21 +87,22 @@ conf.material = {
 		non_current_windows = true,
 	},
 	plugins = {
-		"nvim-notify",
-		"nvim-tree",
-		"indent-blankline",
-		"which-key",
-		"hop",
+		"fidget",
 		"gitsigns",
-		"telescope",
+		"hop",
+		"indent-blankline",
 		"lspsaga",
+		"nvim-tree",
 		"nvim-cmp",
+		"telescope",
+		"which-key",
+		"nvim-notify",
 	},
-	lualine_style = "default",
 	high_visibility = {
 		lighter = true,
 		darker = true,
 	},
+	lualine_style = "default",
 }
 
 conf.lualine = {
@@ -164,38 +160,21 @@ conf.ibl = {
 	},
 }
 
-conf.bufferline = function()
-	local bfl = require("bufferline")
-	bfl.setup({
-		options = {
-			style_preset = bfl.style_preset.default,
-			numbers = "buffer_id",
-			buffer_close_icon = "",
-			indicator = { style = "underline" },
-			show_tab_indicators = true,
-			diagnostics = "nvim_lsp",
-			diagnostics_indicator = function(count, level)
-				local icon = level:match("error") and "x" or "!"
-				return " " .. icon .. count
-			end,
-			tab_size = 9,
-			offsets = {
-				{
-					filetype = "NvimTree",
-					text = "File Explorer",
-					highlight = "Directory",
-					text_align = "left",
-				},
-			},
-			show_buffer_icons = false,
-			separator_style = "slope",
-		},
-	})
-end
-
-conf.hop = { keys = "etovxqpdygfblzhckisuran" }
-
-conf.comment = { mappings = { extra = false } }
+conf.bufferline = {
+	options = {
+		numbers = "ordinal",
+		buffer_close_icon = "",
+		indicator = { style = "underline" },
+		tab_size = 9,
+		diagnostics = "nvim_lsp",
+		diagnostics_indicator = function(count, level)
+			local icon = level:match("error") and "x" or "!"
+			return "[" .. icon .. count .. "]"
+		end,
+		show_buffer_icons = false,
+		show_tab_indicators = true,
+	},
+}
 
 conf.copilot = {
 	panel = { enabled = false },
@@ -244,31 +223,35 @@ for _, k in ipairs(conf.nvim__engines) do
 	end
 end
 
-conf.conform = function(conform_module)
-	conform_module.setup({
-		formatters = {
-			black = {
-				prepend_args = {
-					"--line-length",
-					"79",
-					"--target-version",
-					"py39",
-				},
+conf.telescope = {
+	defaults = {
+		scroll_strategy = "limit",
+	},
+}
+
+conf.conform = {
+	formatters = {
+		black = {
+			prepend_args = {
+				"--line-length",
+				"79",
+				"--target-version",
+				"py39",
 			},
 		},
-		formatters_by_ft = {
-			python = {
-				"isort",
-				"black",
-			},
-			lua = { "stylua" },
-			yaml = { "prettier" },
-			json = { "prettier" },
-			["*"] = { "codespell" },
-			["_"] = { "trim_whitespace" },
+	},
+	formatters_by_ft = {
+		python = {
+			"isort",
+			"black",
 		},
-	})
-end
+		lua = { "stylua" },
+		yaml = { "prettier" },
+		json = { "prettier" },
+		["*"] = { "codespell" },
+		["_"] = { "trim_whitespace" },
+	},
+}
 
 conf.nvim_lint = function()
 	local lint = require("lint")
@@ -283,7 +266,6 @@ conf.nvim_lint = function()
 	})
 end
 
-conf.mason = {}
 conf.mason_tool_installer = {
 	ensure_installed = conf.mason__auto_install,
 }
@@ -332,21 +314,26 @@ conf.lsp_signature = {
 	hi_parameter = "LspSignatureActiveParameter",
 }
 
-conf.lspsaga = {}
-
 conf.nvim_treesitter = {
-	ensure_installed = { "python", "c", "lua", "vim", "vimdoc", "markdown", "markdown_inline", "latex" },
+	ensure_installed = {
+		-- frontend
+		"html",
+		"css",
+		"javascript",
+		-- script
+		"python",
+		"lua",
+		"vim",
+		-- compile
+		"go",
+		"c",
+		"cpp",
+		-- doc
+		"vimdoc",
+		"markdown",
+		-- doc - compile
+		"latex",
+	},
 }
-
-conf.vimtex = function()
-	if vim.loop.os_uname().sysname == "Darwin" then
-		vim.g.vimtex_view_method = "skim"
-	elseif vim.loop.os_uname().sysname == "Linux" then
-		vim.g.vimtex_view_method = ""
-	else
-        error("Not Implemented Error.")
-	end
-	vim.g.vimtex_quickfix_open_on_warning = 0
-end
 
 return conf

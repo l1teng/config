@@ -7,20 +7,14 @@ local opt = function(desc)
 end
 
 kb.basic = function()
-	map("n", "<leader>w", function()
-		vim.cmd("wa")
-	end, opt("[basic] File Save"))
-	map("n", "<leader><CR>", function()
-		vim.cmd("noh")
-	end, opt("[basic] No Highlight"))
+	map("n", "<leader>w", ":wa<CR>", opt("[basic] File Save"))
+	map("n", "<leader><CR>", ":noh<CR>", opt("[basic] No Highlight"))
 	map("v", "<", "<gv", opt("[basic] Indent >"))
 	map("v", ">", ">gv", opt("[basic] Indent <"))
-	-- fold
-	-- vim.cmd([[set foldmethod=indent]])
 end
 
 kb.window = function()
-	map("", "<C-w>c", ":close<CR>", opt("[builtin] Window Close"))
+	map("n", "<C-w>c", ":close<CR>", opt("[builtin] Window Close"))
 	map("n", "<C-w>>", ":vertical resize +20<CR>", opt("[builtin] Window Resize +w"))
 	map("n", "<C-w><", ":vertical resize -20<CR>", opt("[builtin] Window Resize -w"))
 	map("n", "<C-w>+", ":resize +10<CR>", opt("[builtin] Window Resize +h"))
@@ -34,28 +28,18 @@ kb.tab = function()
 	map("n", "<C-t>p", ":tabprevious<CR>", opt())
 end
 
-kb.lsp = function()
-	map("n", "gD", vim.lsp.buf.declaration, opt("[lsp] go declaration"))
-	map("n", "gd", vim.lsp.buf.definition, opt("[lsp] go defeinition"))
-	map("n", "gr", vim.lsp.buf.references, opt("[lsp] go references"))
-	map("n", "gh", vim.lsp.buf.hover, opt("[lsp] hover help"))
-	map("n", "<C-k>", vim.lsp.buf.signature_help, opt())
-end
+kb.bufferline = {
+	{ "<C-h>", ":BufferLineCyclePrev<CR>", "n", desc = "[bufferline] Prev" },
+	{ "<C-l>", ":BufferLineCycleNext<CR>", "n", desc = "[bufferline] Next" },
+}
 
-kb.material = function() end
+kb.bufdelete = {
+	{ "<C-w>d", ":Bdelete<CR>", "n", desc = "[bufdelete] Delete Buffer" },
+}
 
-kb.bufferline = function()
-	map("n", "<C-h>", ":BufferLineCyclePrev<CR>", opt("[bufferline] Prev"))
-	map("n", "<C-l>", ":BufferLineCycleNext<CR>", opt("[bufferline] Next"))
-end
-
-kb.bufdelete = function()
-	map("n", "<C-w>d", ":Bdelete<CR>", opt("[bufdelete] Delete Buffer"))
-end
-
-kb.nvt = function()
-	map("n", "<leader>nn", ":NvimTreeToggle<CR>", opt("[nvt] Toggle Nvim-Tree"))
-end
+kb.nvt = {
+	{ "<leader>nn", ":NvimTreeToggle<CR>", "n", desc = "[nvt] Toggle Nvim-Tree" },
+}
 
 kb.nvt_buf = function(bufnr)
 	local nvt_api = require("nvim-tree.api")
@@ -95,27 +79,32 @@ kb.nvt_buf = function(bufnr)
 	map("n", "bmv", nvt_api.marks.bulk.move, nvt_opt("[nvim-tree] Move Bookmarked"))
 end
 
-kb.hop = function()
-	map("n", "fw", ":HopWord<CR>", opt("[hop] Find Words"))
-end
+kb.hop = {
+	{ "fw", ":HopWord<CR>", "n", desc = "[hop] Find Words" },
+}
 
-kb.telescope = function()
-	map("n", "<leader>ff", ":Telescope find_files<CR>", opt("[telescope] Find Files"))
-	map("n", "<leader>fg", ":Telescope live_grep<CR>", opt("[telescope] Find Greps"))
-	map("n", "<leader>fb", ":Telescope buffers<CR>", opt("[telescope] Find Buffers"))
-end
+kb.telescope = {
+	{ "<leader>ff", ":Telescope find_files<CR>", "n", desc = "[telescope] Find Files" },
+	{ "<leader>fg", ":Telescope live_grep<CR>", "n", desc = "[telescope] Find Greps" },
+	{ "<leader>fb", ":Telescope buffers<CR>", "n", desc = "[telescope] Find Buffers" },
+}
 
-kb.conform = function(module)
-	map("n", "<leader>fm", function()
-		vim.notify("Formatting code...")
-		module.format({
-			lsp_fallback = true,
-			async = false,
-			timeout_ms = 5000,
-		})
-		vim.notify("Formatting code...\nDone.")
-	end, opt("[conform] Format Code"))
-end
+kb.conform = {
+	{
+		"<leader>fm",
+		function()
+			vim.notify("Formatting code...")
+			require("conform").format({
+				lsp_fallback = true,
+				async = false,
+				timeout_ms = 5000,
+			})
+			vim.notify("Formatting code...\nDone.")
+		end,
+		"n",
+		desc = "[conform] Format Code",
+	},
+}
 
 kb.cmp = function()
 	local cmp = require("cmp")
@@ -131,49 +120,35 @@ kb.cmp = function()
 	}
 end
 
-kb.lspsaga = function()
-	map("n", "<leader>fd", function()
-		vim.cmd("Lspsaga finder")
-	end, opt("[lspsaga] Show All Def & Ref"))
-	map("n", "<leader>gic", function()
-		vim.cmd("Lspsaga incoming_calls")
-	end, opt("[lspsaga] Show In Calls"))
-	map("n", "<leader>goc", function()
-		vim.cmd("Lspsaga outgoing_calls")
-	end, opt("[lspsaga] Show Out Calls"))
-	map("n", "<leader>ca", function()
-		vim.cmd("Lspsaga code_action")
-	end, opt("[lspsaga] Code Action"))
-	map("n", "<leader>rn", function()
-		vim.cmd("Lspsaga rename")
-	end, opt("[lspsaga] Renam"))
-	map("n", "<leader>gd", function()
-		vim.cmd("Lspsaga peek_definition")
-	end, opt("[lspsaga] Show Def"))
-	map("n", "gO", function()
-		vim.cmd("Lspsaga show_line_diagnostics")
-	end, opt("[lspsaga] Show Diag Line"))
-	map("n", "go", function()
-		vim.cmd("Lspsaga show_cursor_diagnostics")
-	end, opt("[lspsaga] Show Diag Cur"))
-	map("n", "gp", function()
-		vim.cmd("Lspsaga diagnostic_jump_prev")
-	end, opt("[lspsaga] Show Diag Prev"))
-	map("n", "gn", function()
-		vim.cmd("Lspsaga diagnostic_jump_next")
-	end, opt("[lspsaga] Show Diag Next"))
-	map("n", "<leader>o", function()
-		vim.cmd("Lspsaga outline")
-	end, opt("[lspsaga] Toggle Outline"))
-	map("n", "K", function()
-		vim.cmd("Lspsaga hover_doc")
-	end, opt("[lspsaga] Hover Doc"))
-end
+kb.gitsigns = {
+	{ "gv", ":Gitsigns preview_hunk<CR>", "n", desc = "[gitsigns] Preview Hunk" },
+	{ "ga", ":Gitsigns stage_hunk<CR>", "n", desc = "[gitsigns] Undo Stage Hunk" },
+	{ "gu", ":Gitsigns undo_stage_hunk<CR>", "n", desc = "[gitsigns] Undo Stage Hunk" },
+	{ "<leader>gp", ":Gitsigns prev_hunk<CR>", "n", desc = "[gitsigns] Prev Hunk" },
+	{ "<leader>gn", ":Gitsigns next_hunk<CR>", "n", desc = "[gitsigns] Next Hunk" },
+}
 
-kb.vimtex = function()
-	-- map("n", "<leader>lS", "<Plug>(vimtex-env-delete)", opt("[VimTex] Del Env Tag"))
-	-- map("n", "<leader>lA", "<Plug>(vimtex-env-change)", opt("[VimTex] ALt Env Tag"))
-	-- map("n", "", "<Plug>（vimtex-cmd-delete）", opt("[VimTex] Del Surround Tag"))
-end
+kb.lspsaga = {
+	-- map("n", "gD", vim.lsp.buf.declaration, opt("[lsp] go declaration"))
+	{ "gd", ":Lspsaga peek_definition<CR>", "n", desc = "[lspsaga] Show Def" },
+	{ "<leader>gd", vim.lsp.buf.definition, "n", desc = "[lsp] Go Def" },
+	{ "gr", ":Lspsaga finder<CR>", "n", desc = "[lspsaga] Peek Ref" },
+	{ "<leader>gr", vim.lsp.buf.references, "n", desc = "[lsp] Go Ref" },
+
+	-- map("n", "gh", vim.lsp.buf.hover, opt("[lsp] hover help"))
+	{ "K", ":Lspsaga hover_doc<CR>", "n", desc = "[lspsaga] Hover Doc" },
+	-- map("n", "<C-k>", vim.lsp.buf.signature_help, opt())
+
+	{ "<leader>rn", ":Lspsaga rename<CR>", "n", desc = "[lspsaga] Renam" },
+	{ "<leader>o", ":Lspsaga outline<CR>", "n", desc = "[lspsaga] Toggle Outline" },
+
+	-- { "<leader>gci", ":Lspsaga incoming_calls<CR>", "n", desc = "[lspsaga] Show In Calls" },
+	-- { "<leader>gco", ":Lspsaga outgoing_calls<CR>", "n", desc = "[lspsaga] Show Out Calls" },
+	{ "<leader>ca", ":Lspsaga code_action<CR>", "n", desc = "[lspsaga] Code Action" },
+	{ "gO", ":Lspsaga show_line_diagnostics<CR>", "n", desc = "[lspsaga] Show Diag Line" },
+	{ "go", ":Lspsaga show_cursor_diagnostics<CR>", "n", desc = "[lspsaga] Show Diag Cur" },
+	{ "gp", ":Lspsaga diagnostic_jump_prev<CR>", "n", desc = "[lspsaga] Show Diag Prev" },
+	{ "gn", ":Lspsaga diagnostic_jump_next<CR>", "n", desc = "[lspsaga] Show Diag Next" },
+}
 
 return kb
