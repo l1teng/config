@@ -1,0 +1,9 @@
+{ "dns":{ "tag":"srv-dns","disableFallback":true, "queryStrategy":"UseIPv4","servers":["tcp+local://223.5.5.5"]},
+  "inbounds":[
+    {"tag":"inb-http","protocol":"http","port":1079},{"tag":"inb-socks","protocol":"socks","port":1080},
+    {"tag":"inb-dns","protocol":"dokodemo-door","port":53,"settings":{"address":"127.0.0.1","port":53,"network":"udp"}}],
+  "outbounds":[
+    {"tag":"otb-dir","protocol":"freedom","settings":{"domainStrategy":"UseIPv4v6"}},
+    {"tag":"otb-rej","protocol":"blackhole"},
+    {"tag":"otb-dns","protocol":"dns"}]
+}
