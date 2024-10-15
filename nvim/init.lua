@@ -59,7 +59,7 @@ vim.opt.swapfile = false
 -- smaller updatetime
 vim.opt.updatetime = 300
 -- keybind mapping time
-vim.opt.timeoutlen = 500
+vim.opt.timeoutlen = 100
 -- split window show pos
 vim.opt.splitbelow = true
 vim.opt.splitright = true
