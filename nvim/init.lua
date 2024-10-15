@@ -18,17 +18,85 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- lazy
-vim.g.mapleader = " "
-vim.g.maplocalleader = " "
--- basic
-require("basic")
-local os_spec = jit.os:lower()
--- TODO: zc, quickfix
+-- ================================================================================
+-- Basic
+-- ================================================================================
+vim.opt.mouse = ""
+vim.opt.encoding = "UTF-8"
+vim.opt.fileencoding = "utf-8"
+vim.opt.scrolloff = 4
+vim.opt.sidescrolloff = 4
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cmdheight = 1
+vim.opt.cursorline = true
+vim.opt.signcolumn = "yes"
+
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftround = true
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+-- indent
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+-- search
+vim.opt.smartcase = true
+vim.opt.hlsearch = true
+vim.opt.incsearch = true
+-- moptde
+vim.opt.showmode = false
+-- refresh moptdified files
+vim.opt.autoread = true
+-- wrap
+vim.opt.wrap = true
+vim.opt.whichwrap = "b,s,<,>,[,],h,l"
+-- nopt backup file
+vim.opt.hidden = true
+vim.opt.backup = false
+vim.opt.writebackup = false
+vim.opt.swapfile = false
+-- smaller updatetime
+vim.opt.updatetime = 300
+-- keybind mapping time
+vim.opt.timeoutlen = 500
+-- split window show pos
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+-- completion
+vim.opt.completeopt = "menu,menuone,noselect,noinsert"
+vim.opt.list = false -- do not show tab as ^I
+vim.opt.listchars = "space:·"
+-- enhance completion
+vim.opt.wildmenu = true
+-- Dont' pass messages to |ins-completin menu|
+vim.opt.shortmess = vim.o.shortmess .. "c"
+vim.opt.pumheight = 10
+-- always show tabline
+vim.opt.showtabline = 2
+-- clipboard enhance
+vim.opt.clipboard = "unnamedplus"
+--
+vim.cmd("filetype plugin indent on")
+vim.cmd("syntax enable")
+
+vim.api.nvim_create_augroup('PythonSettings', {})
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'python',
+  callback = function()
+    vim.wo.colorcolumn = "80"
+  end,
+  group = 'PythonSettings',
+})
+
 
 -- ================================================================================
 -- plugs
 -- ================================================================================
+local os_spec = jit.os:lower()
+-- lazy
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 local conf = require("conf")
 conf.auto_restore_cursor_pos()
 local keyb = require("keybind")
@@ -47,6 +115,11 @@ require("lazy").setup({
 					config = function()
 						vim.notify = require("notify")
 					end,
+				},
+				{
+					"j-hui/fidget.nvim",
+					tag = "v1.4.5",
+					opts = {},
 				},
 				{
 					"nvim-tree/nvim-tree.lua",
@@ -98,11 +171,6 @@ require("lazy").setup({
 					keys = keyb.gitsigns,
 				},
 				{
-					"j-hui/fidget.nvim",
-					tag = "v1.4.5",
-					opts = {},
-				},
-				{
 					"folke/which-key.nvim",
 					tag = "v3.13.2",
 					lazy = true,
@@ -115,6 +183,24 @@ require("lazy").setup({
 					opts = { keys = "etovxqpdygfblzhckisuran" },
 					keys = keyb.hop,
 				},
+				{
+					"ThePrimeagen/harpoon",
+					commit = "0378a6c",
+					lazy = true,
+					opts = {},
+					keys = keyb.harpoon,
+					dependencies = {
+						{
+							"nvim-telescope/telescope.nvim",
+							commit = "df534c3",
+							lazy = true,
+							dependencies = { { "nvim-lua/plenary.nvim", tag = "v0.1.4" } },
+							opts = conf.telescope,
+							keys = keyb.telescope,
+						},
+					},
+				},
+				{ "RRethy/vim-illuminate", commit = "5eeb795" },
 				{
 					"hrsh7th/nvim-cmp",
 					commit = "ae644fe",
@@ -173,7 +259,7 @@ require("lazy").setup({
 				},
 			},
 			init = function()
-				vim.g.material_style = "deep ocean"
+				vim.g.material_style = "darker"
 				vim.cmd([[colorscheme material]])
 			end,
 			opts = conf.material,
@@ -190,14 +276,6 @@ require("lazy").setup({
 			opts = {},
 		},
 		{ "aserowy/tmux.nvim", commit = "65ee9d6" },
-		{
-			"nvim-telescope/telescope.nvim",
-			commit = "df534c3",
-			lazy = true,
-			dependencies = { { "nvim-lua/plenary.nvim", tag = "v0.1.4" } },
-			opts = conf.telescope,
-			keys = keyb.telescope,
-		},
 		{
 			"stevearc/conform.nvim",
 			branch = "nvim-0.9",

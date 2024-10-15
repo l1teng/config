@@ -89,7 +89,9 @@ conf.material = {
 	plugins = {
 		"fidget",
 		"gitsigns",
+		"harpoon",
 		"hop",
+		"illuminate",
 		"indent-blankline",
 		"lspsaga",
 		"nvim-tree",

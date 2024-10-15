@@ -83,6 +83,67 @@ kb.hop = {
 	{ "fw", ":HopWord<CR>", "n", desc = "[hop] Find Words" },
 }
 
+local function toggle_telescope(harpoon_files)
+	local conf = require("telescope.config").values
+	local file_paths = {}
+	for _, item in ipairs(harpoon_files.items) do
+		table.insert(file_paths, item.value)
+	end
+
+	require("telescope.pickers")
+		.new({}, {
+			prompt_title = "Harpoon",
+			finder = require("telescope.finders").new_table({
+				results = file_paths,
+			}),
+			previewer = conf.file_previewer({}),
+			sorter = conf.generic_sorter({}),
+		})
+		:find()
+end
+kb.harpoon = {
+	{
+		"<leader>ha",
+		function()
+			require("harpoon"):list():add()
+		end,
+		"n",
+		desc = "[harpoon] Add Tag",
+	},
+    {
+		"<leader>hh",
+		function()
+			require("harpoon").ui:toggle_quick_menu(require("harpoon"):list())
+		end,
+		"n",
+		desc = "[harpoon] Show List",
+	},
+	{
+		"<leader>ht",
+		function()
+			toggle_telescope(require("harpoon"):list())
+		end,
+		"n",
+		desc = "[harpoon] Show List",
+	},
+	{
+		"<leader>hp",
+		function()
+			require("harpoon"):list():prev()
+		end,
+		"n",
+		desc = "[harpoon] prev tag",
+	},
+	{
+		"<leader>hn",
+		function()
+			require("harpoon"):list():next()
+		end,
+		"n",
+		desc = "[harpoon] next tag",
+	},
+}
+
 kb.telescope = {
 	{ "<leader>ff", ":Telescope find_files<CR>", "n", desc = "[telescope] Find Files" },
 	{ "<leader>fg", ":Telescope live_grep<CR>", "n", desc = "[telescope] Find Greps" },
