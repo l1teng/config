@@ -93,7 +93,6 @@ vim.api.nvim_create_autocmd('FileType', {
 -- ================================================================================
 -- plugs
 -- ================================================================================
-local os_spec = jit.os:lower()
 -- lazy
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
@@ -311,7 +310,7 @@ require("lazy").setup({
 			tag = "v2.15",
 			ft = { "tex", "plaintex", "bib" },
 			init = function()
-				vim.g.vimtex_view_method = (os_spec == "osx") and "skim" or ""
+				vim.g.vimtex_view_method = (jit.os:lower() == "osx") and "skim" or ""
 				vim.g.vimtex_quickfix_open_on_warning = 0
 			end,
 		},
