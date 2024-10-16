@@ -8,8 +8,6 @@ local opt = function(desc)
 	return { desc = desc, noremap = true, silent = true, nowait = true }
 end
 
-local cmp = require("cmp")
-
 local K = {}
 
 K.comment = {
@@ -165,42 +163,44 @@ K.cmp = {
 		K.cmp_lsp,
 		K.cmp_copilot,
 	},
-	opts = {
-		mapping = {
-			["<C-p>"] = cmp.mapping.select_prev_item(),
-			["<C-n>"] = cmp.mapping.select_next_item(),
-			["<CR>"] = cmp.mapping.confirm({
-				select = true,
-				behavior = cmp.ConfirmBehavior.Replace,
-			}),
-			["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-			["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-		},
-		sources = {
-			{ name = "copilot", priority = 4 },
-			{ name = "vsnip", priority = 3 },
-			{ name = "nvim_lsp", priority = 2 },
-			{ name = "path", priority = 1 },
-			{ name = "buffer", priority = 0 },
-		},
-		snippet = {
-			expand = function(args)
-				vim.fn["vsnip#anonymous"](args.body)
-			end,
-		},
-		formatting = {
-			format = require("lspkind").cmp_format({
-				mode = "symbol",
-				maxwidth = 50,
-				ellipsis_char = "...",
-				show_labelDetails = true,
-				before = function(entry, vim_item)
-					vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
-					return vim_item
+	config = function()
+		require("cmp").setup({
+			mapping = {
+				["<C-p>"] = require("cmp").mapping.select_prev_item(),
+				["<C-n>"] = require("cmp").mapping.select_next_item(),
+				["<CR>"] = require("cmp").mapping.confirm({
+					select = true,
+					behavior = require("cmp").ConfirmBehavior.Replace,
+				}),
+				["<C-u>"] = require("cmp").mapping(require("cmp").mapping.scroll_docs(-4), { "i", "c" }),
+				["<C-d>"] = require("cmp").mapping(require("cmp").mapping.scroll_docs(4), { "i", "c" }),
+			},
+			sources = {
+				{ name = "copilot", priority = 4 },
+				{ name = "vsnip", priority = 3 },
+				{ name = "nvim_lsp", priority = 2 },
+				{ name = "path", priority = 1 },
+				{ name = "buffer", priority = 0 },
+			},
+			snippet = {
+				expand = function(args)
+					vim.fn["vsnip#anonymous"](args.body)
 				end,
-			}),
-		},
-	},
+			},
+			formatting = {
+				format = require("lspkind").cmp_format({
+					mode = "symbol",
+					maxwidth = 50,
+					ellipsis_char = "...",
+					show_labelDetails = true,
+					before = function(entry, vim_item)
+						vim_item.menu = "[" .. string.upper(entry.source.name) .. "]"
+						return vim_item
+					end,
+				}),
+			},
+		})
+	end,
 }
 
 K.conform = {
@@ -631,6 +631,7 @@ K.notify = {
 	tag = "v3.13.5",
 	lazy = false,
 	config = function()
+		require("notify").setup({ fps = 5, timeout = 2000 })
 		vim.notify = require("notify")
 	end,
 }
