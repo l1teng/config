@@ -70,13 +70,27 @@ vim.opt.clipboard = "unnamedplus"
 vim.cmd("filetype plugin indent on")
 vim.cmd("syntax enable")
 
+-- PYTHON
 vim.api.nvim_create_augroup("PythonSettings", {})
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "python",
 	callback = function()
+		vim.bo.expandtab = true
 		vim.wo.colorcolumn = "80"
+		vim.opt.shiftwidth = 4
 	end,
 	group = "PythonSettings",
+})
+-- GOLANG
+vim.api.nvim_create_augroup("GoSettings", {})
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "go",
+	callback = function()
+		vim.bo.expandtab = false
+		vim.wo.colorcolumn = "80"
+		vim.opt.shiftwidth = 4
+	end,
+	group = "GoSettings",
 })
 
 -- ================================================================================
