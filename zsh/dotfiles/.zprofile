@@ -31,6 +31,7 @@ export HOMEBREW_GITHUB_API_TOKEN=
 
 
 export TLDR_AUTO_UPDATE_DISABLED=1
+export TLDR_CACHE_DIR="${HOME}/.config/tldr/cache"
 
 export CONDARC="${HOME}/.config/conda/condarc"
 

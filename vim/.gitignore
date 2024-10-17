@@ -1,7 +1,6 @@
 *
 !.gitignore
-!init.lua
-!lua/
-!lua/**
+!.gitkeep
+!vimrc
 !cache/
 !cache/.gitkeep

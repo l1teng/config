@@ -1,5 +1,7 @@
 local vim = vim
 
+table.insert(vim.opt.viminfo, 1, "~/.config/nvim")
+
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 

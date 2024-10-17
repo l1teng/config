@@ -1,7 +1,4 @@
 *
 !.gitignore
-!init.lua
-!lua/
-!lua/**
 !cache/
 !cache/.gitkeep
